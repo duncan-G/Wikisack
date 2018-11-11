@@ -113,16 +113,6 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-router.put('/:id', (req, res, next) => {
-  let page;
-  res.send(wikiPage(page));
-});
-
-router.delete('/:id', (req, res, next) => {
-  let page;
-  res.send(wikiPage(page));
-});
-
 router.use((err, req, res, next) => {
   if (err) {
     res.status(err.status).send(err.handler(...err.args));

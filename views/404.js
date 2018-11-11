@@ -1,7 +1,7 @@
 const html = require('html-template-tag');
 const layout = require('./layout');
 
-module.exports = (slug) =>
+module.exports = slug =>
   layout(html`
     <div id="error">
       <h1>404</h1>

@@ -5,7 +5,7 @@ module.exports = (page, author) =>
   layout(html`
     <h3>Edit a Page</h3>
     <hr />
-    <form method="POST" action="/wiki/${page.slug}">
+    <form id="update-form" method="POST" action="/wiki/${page.slug}">
       <div class="form-group">
         <label for="author" class="col-sm-2 control-label">Author</label>
         <div class="col-sm-10">
@@ -64,7 +64,10 @@ module.exports = (page, author) =>
       </div>
 
       <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-primary">submit</button>
+        <button id='update-btn' type="submit" class="btn btn-primary" disabled>Update</button>
+        <button onclick="window.locaton='/wiki/${page.slug}'" class="btn">Cancel</button>
       </div>
+
     </form>
+    <script src="/js/editPage.js"> </script>
   `);
