@@ -1,12 +1,5 @@
 const Sequelize = require('sequelize');
-
-const config = {
-  username: 'postgres',
-  password: 'uhuruYabure',
-  database: 'wikistack',
-  host: 'localhost',
-  port: 5432,
-};
+const config = require('./.db.config');
 
 config.databaseUrl = function() {
   return `postgres://${this.username}:${this.password}@${this.host}:${this.port}/${this.database}`;
