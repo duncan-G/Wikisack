@@ -6,3 +6,21 @@ body {
 a {
   color: #00B7FF;
 }
+
+textarea {
+  resize: vertical;
+}
+
+#error {
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+}
+
+#error h1 {
+  font-size: 6em;
+}
+
+#error h2 {
+  font-size: 3em;
+}

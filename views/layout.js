@@ -10,6 +10,7 @@ module.exports = content => html`
         rel="stylesheet"
       />
       <link href="/stylesheets/style.css" rel="stylesheet" />
+      <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
       <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">

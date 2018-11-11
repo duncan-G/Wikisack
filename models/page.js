@@ -20,8 +20,10 @@ const Page = db.define('page', {
   }
 });
 
-Page.addHook('beforeValidate', (pageData) => {
+const slugifyTitle = pageData => {
   pageData.slug = slugify(pageData.title);
-})
+};
+Page.addHook('beforeValidate', slugifyTitle);
+Page.addHook('beforeUpdate', slugifyTitle);
 
 module.exports = Page;

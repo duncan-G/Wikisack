@@ -1,6 +1,15 @@
 const router = require('express').Router();
-const { addPage, editPage, main, wikiPage } = require('../views');
+const {
+  addPage,
+  editPage,
+  error404,
+  error500,
+  main,
+  wikiPage
+} = require('../views');
 const { Page, User } = require('../models');
+const marked = require('marked');
+const utils = require('./routeUtils');
 
 router.get('/add', (req, res, next) => {
   res.send(addPage());
@@ -11,20 +20,74 @@ router.get('/', async (req, res, next) => {
     const pages = await Page.findAll();
     res.send(main(pages));
   } catch (err) {
-    next(err);
+    console.error(err);
+    const routeError = utils.RouteError(500, error500);
+    next(routeError);
   }
 });
 
 router.get('/:slug', async (req, res, next) => {
-  try {
-    const slug = req.params.id;
-    const page = await Page.findOne({ slug });
-    const user = await page.getAuthor();
+  const slug = req.params.slug;
+  const page = await Page.findOne({ where: { slug } });
 
-    res.send(wikiPage(page, user));
+  if (!page) {
+    const routeError = utils.RouteError(404, error404, [slug]);
+    next(routeError);
+  }
+
+  try {
+    const user = await page.getAuthor();
+    page.content = marked(page.content);
+    res.send(marked(wikiPage(page, user)));
   } catch (err) {
     next(err);
   }
+});
+
+router.post('/:slug', async (req, res, next) => {
+  const slug = req.params.slug;
+  const page = await Page.findOne({ where: { slug } });
+
+  if (!page) {
+    const routeError = utils.RouteError(404, error404, [slug]);
+    next(routeError);
+  }
+
+  try {
+    await page.update({
+      title: req.body.title,
+      content: req.body.content,
+      status: req.body.status
+    });
+    await page.save();
+
+    res.redirect(`/wiki/${page.slug}`);
+  } catch (err) {
+    next(utils.routeError(500, error500));
+  }
+});
+
+router.get('/:slug/edit', async (req, res, next) => {
+  const slug = req.params.slug;
+  const page = await Page.findOne({ where: { slug } });
+
+  if (!page) {
+    const routeError = utils.RouteError(404, error404, [slug]);
+    next(routeError);
+  }
+
+  try {
+    const user = await page.getAuthor();
+    res.send(editPage(page, user));
+  } catch (err) {
+    next(utils.RouteError(500, error500));
+  }
+});
+
+router.get('/:slug/delete', async (req, res, next) => {
+  const slug = req.params.slug;
+  await Page.destroy({ where: { slug } });
+  res.redirect('/');
 });
 
 router.post('/', async (req, res, next) => {
@@ -58,6 +121,14 @@ router.put('/:id', (req, res, next) => {
 router.delete('/:id', (req, res, next) => {
   let page;
   res.send(wikiPage(page));
+});
+
+router.use((err, req, res, next) => {
+  if (err) {
+    res.status(err.status).send(err.handler(...err.args));
+  } else {
+    next();
+  }
 });
 
 module.exports = router;

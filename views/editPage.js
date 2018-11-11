@@ -6,14 +6,33 @@ module.exports = (page, author) =>
     <h3>Edit a Page</h3>
     <hr />
     <form method="POST" action="/wiki/${page.slug}">
-      <div>PLACEHOLDER FOR AUTHOR NAME FIELD</div>
+      <div class="form-group">
+        <label for="author" class="col-sm-2 control-label">Author</label>
+        <div class="col-sm-10">
+          <input
+            id="author"
+            name="author"
+            type="text"
+            value="${author.name}"
+            class="form-control"
+            readonly
+          />
+        </div>
+      </div>
 
-      <div>PLACEHOLDER FOR AUTHOR EMAIL FIELD</div>
+      <input
+        id="email"
+        name="email"
+        type="hidden"
+        class="form-control"
+        value="${author.email}"
+        disabled/>
 
       <div class="form-group">
         <label for="title" class="col-sm-2 control-label">Page Title</label>
         <div class="col-sm-10">
           <input
+            id="title"
             name="title"
             type="text"
             class="form-control"
@@ -22,14 +41,24 @@ module.exports = (page, author) =>
         </div>
       </div>
 
-      <div>PLACEHOLDER FOR PAGE CONTENT TEXTAREA FIELD</div>
+      <div class="form-group">
+        <label for="content" class="col-sm-2 control-label">Page Content</label>
+        <div class="col-sm-10">
+          <textarea
+            id="content"
+            name="content"
+            type="text"
+            class="form-control"
+            rows="10">${page.content}</textarea>
+        </div>
+      </div>
 
       <div class="form-group">
         <label for="content" class="col-sm-2 control-label">Status</label>
         <div class="col-sm-10">
-          <select name="status">
-            <option ${page.status == 'open' ? 'selected' : ''}>open</option>
-            <option ${page.status == 'closed' ? 'selected' : ''}>closed</option>
+          <select d="status" name="status" name="status" class="form-control">
+            <option ${page.status === 'open' ? 'selected' : ''}>open</option>
+            <option ${page.status === 'closed' ? 'selected' : ''}>closed</option>
           </select>
         </div>
       </div>

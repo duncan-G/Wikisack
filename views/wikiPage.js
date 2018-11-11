@@ -9,7 +9,7 @@ module.exports = (page, author) =>
     </h3>
     <h4>by <a href="/users/${author.id}">${author.name}</a></h4>
     <hr />
-    <div class="page-body">${page.content}</div>
+    <div class="page-body">$${page.content}</div>
     <hr />
     <a href="/wiki/${page.slug}/edit" class="btn btn-primary">edit this page</a>
     <a href="/wiki/${page.slug}/delete" class="btn btn-danger"

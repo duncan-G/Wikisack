@@ -30,14 +30,19 @@ module.exports = () =>
       <div class="form-group">
         <label for="content" class="col-sm-2 control-label">Page Content</label>
         <div class="col-sm-10">
-          <textarea id="content" name="content" type="text" class="form-control"> </textarea>
+          <textarea
+            id="content"
+            name="content"
+            type="text"
+            class="form-control"
+            rows="10"></textarea>
         </div>
       </div>
 
       <div class="form-group">
         <label for="status" class="col-sm-2 control-label">Page Status</label>
         <div class="col-sm-10">
-          <select id="status" name="status" class="form-control" >
+          <select id="status" name="status" class="form-control">
             <option value="open">open</option>
             <option value="closed">closed</option>
           </select>
