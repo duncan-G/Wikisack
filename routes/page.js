@@ -5,11 +5,13 @@ const {
   error404,
   error500,
   main,
-  wikiPage
+  wikiPage,
+  searchPage
 } = require('../views');
 const { Page, User } = require('../models');
 const marked = require('marked');
 const utils = require('./routeUtils');
+const { Op } = require('sequelize');
 
 router.get('/add', (req, res, next) => {
   res.send(addPage());
@@ -17,7 +19,7 @@ router.get('/add', (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
   try {
-    const pages = await Page.findAll();
+    const pages = req.pages ? req.pages : await Page.findAll();
     res.send(main(pages));
   } catch (err) {
     console.error(err);
@@ -25,6 +27,35 @@ router.get('/', async (req, res, next) => {
     next(routeError);
   }
 });
+
+router.get('/search', async (req, res, next) => {
+  try {
+    res.send(searchPage());
+  } catch(error) {
+    console.log(error);
+    next(utils.RouteError(500, error500))
+  }
+})
+
+router.post('/search', async (req, res, next) => {
+  try {
+    const tags = req.body.search.trim().split(' ');
+    const searchResults = await Page.findAll({
+        // Op.overlap matches a set of possibilities
+        where: {
+            tags: {
+                [Op.overlap]: tags
+            }
+        }
+    });
+    req.pages = searchResults;
+    // res.redirect('/', req);
+    next('/');
+  } catch (error) {
+    //console.log(error);
+    next(utils.RouteError(500, error500))
+  }
+})
 
 router.get('/:slug', async (req, res, next) => {
   const slug = req.params.slug;
@@ -104,7 +135,7 @@ router.post('/', async (req, res, next) => {
       title: req.body.title,
       content: req.body.content,
       status: req.body.status,
-      tags: req.body.trim().tags.split(' ')
+      tags: req.body.tags.trim().split(' ')
     });
 
     newPage.setAuthor(user);

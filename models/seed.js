@@ -14,8 +14,8 @@ const pageData = Array(50)
 
 const userData = Array(10).fill(null).map(_ => {
   return {
-    name : faker.name.findName();
-    email : faker.internet.email();
+    name : faker.name.findName(),
+    email : faker.internet.email()
   }
 })
 

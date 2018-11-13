@@ -10,6 +10,7 @@ router.use((req, res) => {
 })
 
 router.use((err, req, res, next) => {
+  console.log('Here is the error: ', err);
   if (err) {
     res.status(err.status).send(err.handler(...err.args));
   } else {
