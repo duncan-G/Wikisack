@@ -7,6 +7,7 @@ const main = require('./main');
 const userList = require('./userList');
 const userPages = require('./userPages');
 const wikiPage = require('./wikiPage');
+const searchPage = require('./search');
 
 module.exports = {
   addPage,
@@ -17,5 +18,6 @@ module.exports = {
   main,
   userList,
   userPages,
-  wikiPage
+  wikiPage,
+  searchPage
 };

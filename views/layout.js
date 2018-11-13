@@ -33,6 +33,7 @@ module.exports = content => html`
               <li><a href="/wiki/">index</a></li>
               <li><a href="/wiki/add">write</a></li>
               <li><a href="/users">users</a></li>
+              <li><a href="/wiki/search">search by tag</a></li>
             </ul>
           </div>
         </div>

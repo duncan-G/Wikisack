@@ -28,9 +28,10 @@ models.db.authenticate().then(() => {
 });
 
 const PORT = 1337;
+const PURGEDB = false
 // Init database
 const init = async () => {
-  await models.db.sync();
+  await models.db.sync({ force: PURGEDB });
 
   app.listen(PORT, () => {
     console.log('App started');
