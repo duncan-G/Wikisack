@@ -40,6 +40,19 @@ module.exports = () =>
       </div>
 
       <div class="form-group">
+        <label for="tags" class="col-sm-2 control-label">Page Tags</label>
+        <div class="col-sm-10">
+          <input
+            id="tags"
+            name="tags"
+            type="text"
+            placeholder="Enter space separated tags"
+            class="form-control"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
         <label for="status" class="col-sm-2 control-label">Page Status</label>
         <div class="col-sm-10">
           <select id="status" name="status" class="form-control">

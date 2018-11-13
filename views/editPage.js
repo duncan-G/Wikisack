@@ -54,6 +54,20 @@ module.exports = (page, author) =>
       </div>
 
       <div class="form-group">
+        <label for="tags" class="col-sm-2 control-label">Page Tags</label>
+        <div class="col-sm-10">
+          <input
+            id="tags"
+            name="tags"
+            type="text"
+            value="${page.tags.join(' ')}"
+            placeholder="Enter space separated tags"
+            class="form-control"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
         <label for="content" class="col-sm-2 control-label">Status</label>
         <div class="col-sm-10">
           <select d="status" name="status" name="status" class="form-control">

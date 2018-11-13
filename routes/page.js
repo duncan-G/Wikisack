@@ -57,7 +57,8 @@ router.post('/:slug', async (req, res, next) => {
     await page.update({
       title: req.body.title,
       content: req.body.content,
-      status: req.body.status
+      status: req.body.status,
+      tags: req.body.trim().tags.split(' ')
     });
     await page.save();
 
@@ -102,7 +103,8 @@ router.post('/', async (req, res, next) => {
     const newPage = await Page.create({
       title: req.body.title,
       content: req.body.content,
-      status: req.body.status
+      status: req.body.status,
+      tags: req.body.trim().tags.split(' ')
     });
 
     newPage.setAuthor(user);
@@ -110,14 +112,6 @@ router.post('/', async (req, res, next) => {
     res.redirect(`/wiki/${newPage.slug}`);
   } catch (err) {
     next(err);
-  }
-});
-
-router.use((err, req, res, next) => {
-  if (err) {
-    res.status(err.status).send(err.handler(...err.args));
-  } else {
-    next();
   }
 });
 
